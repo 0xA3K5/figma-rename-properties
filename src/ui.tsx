@@ -156,7 +156,6 @@ function Plugin() {
             const uniqueProps = new Set(
               components.flatMap((comp) => comp.matchedProps)
             );
-
             return (
               <li key={parentId}>
                 <button

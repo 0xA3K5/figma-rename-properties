@@ -17,7 +17,7 @@ export default function HighlightedText({
 }: Props): JSX.Element {
   const regex = new RegExp(
     searchSettings.matchWholeWord ? `\\b${searchKey}\\b` : searchKey,
-    searchSettings.caseSensitive ? 'g' : 'gi'
+    searchSettings.caseSensitive ? '' : 'i'
   );
 
   const renderReplace = (rplc: string) => {

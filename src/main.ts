@@ -28,7 +28,7 @@ const findMatchingComponents = (
       const properties = node.name.split(', ');
       const searchRegex = new RegExp(
         searchSettings.matchWholeWord ? `\\b${searchKey}\\b` : searchKey,
-        searchSettings.caseSensitive ? 'g' : 'gi'
+        searchSettings.caseSensitive ? '' : 'i'
       );
 
       const matchedProps = properties.filter((prop) => searchRegex.test(prop));
