@@ -59,7 +59,7 @@ function Plugin() {
       replace,
       components
     );
-    setMatchingComps(null);
+    emit<FindComponents>('FIND_COMPONENTS', searchKey);
   };
 
   const handleReplaceAll = () => {

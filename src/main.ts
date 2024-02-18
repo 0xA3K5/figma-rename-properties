@@ -12,10 +12,8 @@ const searchPage = (): SceneNode[] => {
   return figma.currentPage.findAll((node) => node.type === 'COMPONENT');
 };
 
-let matchingComps: IComponent[] = [];
-
 const findMatchingComponents = (searchKey: string) => {
-  matchingComps = [];
+  const matchingComps: IComponent[] = [];
   const nodes = searchPage();
 
   nodes.forEach((node) => {
@@ -43,6 +41,7 @@ const findMatchingComponents = (searchKey: string) => {
       }
     }
   });
+  return matchingComps;
 };
 
 const handleReplace = (
@@ -81,7 +80,7 @@ export default function () {
   );
 
   on<FindComponents>('FIND_COMPONENTS', (searchKey) => {
-    findMatchingComponents(searchKey);
+    const matchingComps = findMatchingComponents(searchKey);
     emit<MatchingComponents>('MATCHING_COMPONENTS', matchingComps);
   });
 
