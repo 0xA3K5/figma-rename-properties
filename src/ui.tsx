@@ -16,8 +16,10 @@ import {
   MatchingComponents,
   ReplaceProperties,
   ResizeWindowHandler,
+  ComponentTargetHandler,
 } from './types';
-import { IconComponent } from './components/icons';
+import IconButton from './components/button/IconButton';
+import { IconComponent, IconTarget } from './components/icons';
 import HighlightedText from './components/highlighted-text/HighlightedText';
 import groupByParent from './utils/group-by-parent';
 
@@ -43,6 +45,11 @@ function Plugin() {
     const groupedComponents = groupByParent(components);
     setMatchingComps(groupedComponents);
     setReplaceComps(groupedComponents[Object.keys(groupedComponents)[0]]);
+
+    const firstGroup = Object.values(groupedComponents)[0];
+    if (firstGroup && firstGroup.length > 0) {
+      emit<ComponentTargetHandler>('TARGET_COMPONENT', firstGroup[0].id);
+    }
   });
 
   const handleReplace = (components: IComponent[]) => {
@@ -59,9 +66,24 @@ function Plugin() {
     handleReplace(Object.values(matchingComps ?? {}).flat());
   };
 
+  const handleComponentTarget = (parentId: string) => {
+    emit<ComponentTargetHandler>('TARGET_COMPONENT', parentId);
+  };
+
+  const handleComponentSelect = (
+    parentId: string,
+    components: IComponent[]
+  ) => {
+    setReplaceComps(components);
+    if (components.length > 0) {
+      emit<ComponentTargetHandler>('TARGET_COMPONENT', parentId);
+    }
+  };
+
   function onWindowResize(windowSize: { width: number; height: number }) {
     emit<ResizeWindowHandler>('RESIZE_WINDOW', windowSize);
   }
+
   useWindowResize(onWindowResize, {
     maxHeight: 720,
     maxWidth: 720,
@@ -106,32 +128,35 @@ function Plugin() {
             );
 
             return (
-              <li
-                key={parentId}
-                className="group flex w-full items-center justify-between gap-3 px-4 py-1 text-sm"
-              >
-                <span className="flex items-start">
-                  <IconComponent />
-                  <span className="flex flex-col gap-1 py-1">
-                    <span className="text-xs" style={{ color: '#9747FF' }}>
-                      {components[0].parent?.name ?? components[0].name}
-                    </span>
-                    {Array.from(uniqueProps).map((prop) => (
-                      <HighlightedText
-                        key={prop}
-                        text={[prop]}
-                        searchKey={searchKey}
-                        replace={replace}
-                      />
-                    ))}
-                  </span>
-                </span>
-                <IconButton
-                  onClick={() => {}}
-                  className="opacity-0 group-hover:opacity-100"
+              <li key={parentId}>
+                <button
+                  type="button"
+                  className={`group ${replaceComps.includes(components[0]) ? 'bg-blue-300 bg-opacity-20' : ''} flex w-full cursor-default items-center justify-between gap-3 px-4 py-1 text-sm`}
+                  onClick={() => handleComponentSelect(parentId, components)}
                 >
-                  <IconTarget />
-                </IconButton>
+                  <span className="flex items-start">
+                    <IconComponent />
+                    <span className="flex flex-col gap-1 py-1">
+                      <span className="text-xs" style={{ color: '#9747FF' }}>
+                        {components[0].parent?.name ?? components[0].name}
+                      </span>
+                      {Array.from(uniqueProps).map((prop) => (
+                        <HighlightedText
+                          key={prop}
+                          text={[prop]}
+                          searchKey={searchKey}
+                          replace={replace}
+                        />
+                      ))}
+                    </span>
+                  </span>
+                  <IconButton
+                    onClick={() => handleComponentTarget(parentId)}
+                    className="opacity-0 group-hover:opacity-100"
+                  >
+                    <IconTarget />
+                  </IconButton>
+                </button>
               </li>
             );
           })}

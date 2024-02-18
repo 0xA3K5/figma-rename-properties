@@ -1,8 +1,10 @@
 import { emit, on, showUI } from '@create-figma-plugin/utilities';
 import {
+  ComponentTargetHandler,
   FindComponents,
   IComponent,
   MatchingComponents,
+  ReplaceProperties,
   ResizeWindowHandler,
 } from './types';
 
@@ -71,13 +73,24 @@ const handleReplace = (
 
 export default function () {
   showUI({ width: 320, height: 320 });
-  on('REPLACE_PROPERTIES', (searchKey, replacement, components) => {
-    handleReplace(searchKey, replacement, components);
-  });
+  on<ReplaceProperties>(
+    'REPLACE_PROPERTIES',
+    (searchKey, replacement, components) => {
+      handleReplace(searchKey, replacement, components);
+    }
+  );
 
   on<FindComponents>('FIND_COMPONENTS', (searchKey) => {
     findMatchingComponents(searchKey);
     emit<MatchingComponents>('MATCHING_COMPONENTS', matchingComps);
+  });
+
+  on<ComponentTargetHandler>('TARGET_COMPONENT', (parentId) => {
+    const node = figma.getNodeById(parentId);
+    if (node && (node.type === 'COMPONENT' || node.type === 'COMPONENT_SET')) {
+      figma.currentPage.selection = [node];
+      figma.viewport.scrollAndZoomIntoView([node]);
+    }
   });
 
   on<ResizeWindowHandler>(

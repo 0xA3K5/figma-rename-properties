@@ -3,12 +3,16 @@ declare const styles: {
   readonly "align-middle": string;
   readonly "align-top": string;
   readonly "bg-black": string;
+  readonly "bg-blue-300": string;
+  readonly "bg-blue-300/20": string;
+  readonly "bg-blue-300/60": string;
   readonly "bg-blue-500": string;
   readonly "bg-gray-300": string;
   readonly "bg-opacity-10": string;
   readonly "bg-opacity-100": string;
   readonly "bg-opacity-20": string;
   readonly "bg-opacity-40": string;
+  readonly "bg-opacity-60": string;
   readonly "bg-slate-200": string;
   readonly "bg-slate-200/20": string;
   readonly "bg-slate-400": string;
@@ -20,6 +24,7 @@ declare const styles: {
   readonly "checked:bg-blue-500": string;
   readonly "checked:bg-opacity-100": string;
   readonly "checked:border-transparent": string;
+  readonly "cursor-default": string;
   readonly "cursor-pointer": string;
   readonly "dark:hover:bg-white": string;
   readonly "dark:text-white": string;

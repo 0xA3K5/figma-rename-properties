@@ -34,3 +34,8 @@ export interface ResizeWindowHandler extends EventHandler {
   name: 'RESIZE_WINDOW';
   handler: (windowSize: { width: number; height: number }) => void;
 }
+
+export interface ComponentTargetHandler extends EventHandler {
+  name: 'TARGET_COMPONENT';
+  handler: (parentId: string) => void;
+}
