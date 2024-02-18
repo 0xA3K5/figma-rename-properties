@@ -3,6 +3,7 @@ import {
   FindComponents,
   IComponent,
   MatchingComponents,
+  ResizeWindowHandler,
 } from './types';
 
 const searchPage = (): SceneNode[] => {
@@ -79,4 +80,11 @@ export default function () {
     emit<MatchingComponents>('MATCHING_COMPONENTS', matchingComps);
   });
 
+  on<ResizeWindowHandler>(
+    'RESIZE_WINDOW',
+    (windowSize: { width: number; height: number }): void => {
+      const { width, height } = windowSize;
+      figma.ui.resize(width, height);
+    }
+  );
 }

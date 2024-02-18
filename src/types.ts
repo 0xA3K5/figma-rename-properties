@@ -30,3 +30,7 @@ export interface FindComponents extends EventHandler {
   name: 'FIND_COMPONENTS';
   handler: (searchKey: string) => void;
 }
+export interface ResizeWindowHandler extends EventHandler {
+  name: 'RESIZE_WINDOW';
+  handler: (windowSize: { width: number; height: number }) => void;
+}

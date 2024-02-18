@@ -59,6 +59,17 @@ function Plugin() {
     handleReplace(Object.values(matchingComps ?? {}).flat());
   };
 
+  function onWindowResize(windowSize: { width: number; height: number }) {
+    emit<ResizeWindowHandler>('RESIZE_WINDOW', windowSize);
+  }
+  useWindowResize(onWindowResize, {
+    maxHeight: 720,
+    maxWidth: 720,
+    minHeight: 320,
+    minWidth: 320,
+    resizeBehaviorOnDoubleClick: 'minimize',
+  });
+
   return (
     <Fragment>
       <div className="flex flex-col gap-4 p-4">
