@@ -1,28 +1,82 @@
-import { on, showUI } from '@create-figma-plugin/utilities';
+import { emit, on, showUI } from '@create-figma-plugin/utilities';
+import {
+  FindComponents,
+  IComponent,
+  MatchingComponents,
+} from './types';
 
-function handleFindAndReplace(searchKey: string, replace: string) {
-  const nodes = figma.currentPage.findAll(
-    (node) => node.type === 'COMPONENT' || node.type === 'COMPONENT_SET'
-  );
+const searchPage = (): SceneNode[] => {
+  return figma.currentPage.findAll((node) => node.type === 'COMPONENT');
+};
+
+let matchingComps: IComponent[] = [];
+
+const findMatchingComponents = (searchKey: string) => {
+  matchingComps = [];
+  const nodes = searchPage();
 
   nodes.forEach((node) => {
-    const properties = node.name.split(', ');
+    if (
+      node.parent &&
+      (node.parent.type === 'COMPONENT' || node.parent.type === 'COMPONENT_SET')
+    ) {
+      const properties = node.name.split(', ');
+      const matchedProps = properties.filter((prop) =>
+        prop.toLowerCase().includes(searchKey.toLowerCase())
+      );
+
+      if (matchedProps.length > 0) {
+        const component = {
+          name: node.name,
+          id: node.id,
+          matchedProps: matchedProps.map((prop) => prop.split('=')[0]),
+          node,
+          parent: {
+            id: node.parent.id,
+            name: node.parent.name,
+          },
+        };
+        matchingComps.push(component);
+      }
+    }
+  });
+};
+
+const handleReplace = (
+  searchKey: string,
+  replacement: string,
+  components: IComponent[]
+) => {
+  components.forEach((comp) => {
+    const properties = comp.name.split(', ');
 
     const newProperties = properties.map((prop) => {
       const [key, value] = prop.split('=');
-      if (key === searchKey) {
-        return `${replace}=${value}`;
+
+      if (key.includes(searchKey)) {
+        const newKey = key.replace(new RegExp(searchKey, 'gi'), replacement);
+        return `${newKey}=${value}`;
       }
-      figma.notify(`no property name ${searchKey}`);
+
       return prop;
     });
 
-    // eslint-disable-next-line no-param-reassign
-    node.name = newProperties.join(', ');
+    const node = figma.getNodeById(comp.node.id);
+    if (node) node.name = newProperties.join(', ');
   });
-}
+
+  figma.notify('Replacement complete');
+};
 
 export default function () {
-  showUI({ width: 240, height: 180 });
-  on('REPLACE_PROPERTIES', handleFindAndReplace);
+  showUI({ width: 320, height: 320 });
+  on('REPLACE_PROPERTIES', (searchKey, replacement, components) => {
+    handleReplace(searchKey, replacement, components);
+  });
+
+  on<FindComponents>('FIND_COMPONENTS', (searchKey) => {
+    findMatchingComponents(searchKey);
+    emit<MatchingComponents>('MATCHING_COMPONENTS', matchingComps);
+  });
+
 }
