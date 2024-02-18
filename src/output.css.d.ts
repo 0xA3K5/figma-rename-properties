@@ -9,6 +9,7 @@ declare const styles: {
   readonly "bg-gray-200": string;
   readonly "bg-opacity-20": string;
   readonly "bg-opacity-40": string;
+  readonly "bg-yellow-200": string;
   readonly "border": string;
   readonly "border-border": string;
   readonly "border-t": string;
@@ -19,6 +20,7 @@ declare const styles: {
   readonly "divide-border-disabled-strong": string;
   readonly "duration-150": string;
   readonly "duration-200": string;
+  readonly "filter": string;
   readonly "flex": string;
   readonly "flex-col": string;
   readonly "flex-grow-0": string;
@@ -51,13 +53,16 @@ declare const styles: {
   readonly "px-[18px]": string;
   readonly "px-[20]": string;
   readonly "py-1": string;
+  readonly "resize": string;
   readonly "rounded-full": string;
   readonly "rounded-md": string;
   readonly "rounded-sm": string;
   readonly "sr-only": string;
   readonly "text-gray-700": string;
+  readonly "text-opacity-60": string;
   readonly "text-sm": string;
   readonly "text-text": string;
+  readonly "text-text-brand": string;
   readonly "text-text-component": string;
   readonly "text-text-oninverse": string;
   readonly "text-white": string;

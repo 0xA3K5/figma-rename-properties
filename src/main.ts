@@ -3,6 +3,7 @@ import {
   ComponentTargetHandler,
   FindComponents,
   IComponent,
+  ISearchSettings,
   MatchingComponents,
   ReplaceProperties,
   ResizeWindowHandler,
@@ -12,7 +13,10 @@ const searchPage = (): SceneNode[] => {
   return figma.currentPage.findAll((node) => node.type === 'COMPONENT');
 };
 
-const findMatchingComponents = (searchKey: string) => {
+const findMatchingComponents = (
+  searchKey: string,
+  searchSettings: ISearchSettings
+) => {
   const matchingComps: IComponent[] = [];
   const nodes = searchPage();
 
@@ -22,9 +26,12 @@ const findMatchingComponents = (searchKey: string) => {
       (node.parent.type === 'COMPONENT' || node.parent.type === 'COMPONENT_SET')
     ) {
       const properties = node.name.split(', ');
-      const matchedProps = properties.filter((prop) =>
-        prop.toLowerCase().includes(searchKey.toLowerCase())
+      const searchRegex = new RegExp(
+        searchSettings.matchWholeWord ? `\\b${searchKey}\\b` : searchKey,
+        searchSettings.caseSensitive ? 'g' : 'gi'
       );
+
+      const matchedProps = properties.filter((prop) => searchRegex.test(prop));
 
       if (matchedProps.length > 0) {
         const component = {
@@ -79,8 +86,8 @@ export default function () {
     }
   );
 
-  on<FindComponents>('FIND_COMPONENTS', (searchKey) => {
-    const matchingComps = findMatchingComponents(searchKey);
+  on<FindComponents>('FIND_COMPONENTS', (searchKey, searchSettings) => {
+    const matchingComps = findMatchingComponents(searchKey, searchSettings);
     emit<MatchingComponents>('MATCHING_COMPONENTS', matchingComps);
   });
 

@@ -600,6 +600,10 @@ video {
   cursor: pointer;
 }
 
+.resize {
+  resize: both;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -707,6 +711,11 @@ video {
   background-color: var(--figma-color-bg-selected);
 }
 
+.bg-yellow-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 240 138 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-20 {
   --tw-bg-opacity: 0.2;
 }
@@ -789,6 +798,14 @@ video {
   color: var(--figma-color-text-component);
 }
 
+.text-text-brand {
+  color: var(--figma-color-text-brand);
+}
+
+.text-opacity-60 {
+  --tw-text-opacity: 0.6;
+}
+
 .line-through {
   text-decoration-line: line-through;
 }
@@ -803,6 +820,10 @@ video {
 
 .opacity-60 {
   opacity: 0.6;
+}
+
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .duration-200 {

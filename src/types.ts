@@ -12,6 +12,11 @@ export interface IComponent {
   node: SceneNode;
 }
 
+export interface ISearchSettings {
+  caseSensitive: boolean;
+  matchWholeWord: boolean;
+}
+
 export interface ReplaceProperties extends EventHandler {
   name: 'REPLACE_PROPERTIES';
   handler: (
@@ -28,7 +33,7 @@ export interface MatchingComponents extends EventHandler {
 
 export interface FindComponents extends EventHandler {
   name: 'FIND_COMPONENTS';
-  handler: (searchKey: string) => void;
+  handler: (searchKey: string, searchSettings: ISearchSettings) => void;
 }
 export interface ResizeWindowHandler extends EventHandler {
   name: 'RESIZE_WINDOW';

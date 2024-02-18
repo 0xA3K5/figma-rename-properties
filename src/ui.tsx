@@ -17,29 +17,37 @@ import {
   ReplaceProperties,
   ResizeWindowHandler,
   ComponentTargetHandler,
+  ISearchSettings,
 } from './types';
 import IconButton from './components/button/IconButton';
 import { IconComponent, IconTarget } from './components/icons';
 import HighlightedText from './components/highlighted-text/HighlightedText';
 import groupByParent from './utils/group-by-parent';
+import ChoiceChip from './components/chip/ChoiceChip';
 
 function Plugin() {
   const [searchKey, setSearchKey] = useState('');
   const [replace, setReplacement] = useState('');
+
+  const [replaceComps, setReplaceComps] = useState<IComponent[]>([]);
   const [matchingComps, setMatchingComps] = useState<Record<
     string,
     IComponent[]
   > | null>();
-  const [replaceComps, setReplaceComps] = useState<IComponent[]>([]);
+
+  const [searchSettings, setSearchSettings] = useState<ISearchSettings>({
+    caseSensitive: false,
+    matchWholeWord: false,
+  });
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchKey) {
-        emit<FindComponents>('FIND_COMPONENTS', searchKey);
+        emit<FindComponents>('FIND_COMPONENTS', searchKey, searchSettings);
       }
     }, 300);
     return () => clearTimeout(timeoutId);
-  }, [searchKey]);
+  }, [searchKey, searchSettings]);
 
   on<MatchingComponents>('MATCHING_COMPONENTS', (components) => {
     const groupedComponents = groupByParent(components);
@@ -59,7 +67,7 @@ function Plugin() {
       replace,
       components
     );
-    emit<FindComponents>('FIND_COMPONENTS', searchKey);
+    emit<FindComponents>('FIND_COMPONENTS', searchKey, searchSettings);
   };
 
   const handleReplaceAll = () => {
@@ -96,6 +104,26 @@ function Plugin() {
     <Fragment>
       <div className="flex flex-col gap-4 p-4">
         <Stack space="small">
+          <div className="flex flex-wrap gap-1">
+            <ChoiceChip
+              label="Case Sensitive"
+              onChange={() =>
+                setSearchSettings({
+                  ...searchSettings,
+                  caseSensitive: !searchSettings.caseSensitive,
+                })
+              }
+            />
+            <ChoiceChip
+              label="Match Whole Word"
+              onChange={() =>
+                setSearchSettings({
+                  ...searchSettings,
+                  matchWholeWord: !searchSettings.matchWholeWord,
+                })
+              }
+            />
+          </div>
           <Textbox
             variant="border"
             label="Search"
@@ -131,25 +159,27 @@ function Plugin() {
               <li key={parentId}>
                 <button
                   type="button"
-                  className={`group ${replaceComps.includes(components[0]) ? 'bg-bg-selected bg-opacity-20' : ''} flex w-full cursor-default items-center justify-between gap-3 px-4 py-1 text-sm`}
+                  className={`group ${replaceComps.includes(components[0]) ? 'bg-bg-selected bg-opacity-20' : ''} flex w-full cursor-default justify-between gap-3 px-4 py-1 text-sm`}
                   onClick={() => handleComponentSelect(parentId, components)}
                 >
                   <span className="flex items-start">
                     <span className="text-text-component">
                       <IconComponent />
                     </span>
-                    <span className="flex flex-col gap-1 py-1">
+                    <span className="flex flex-col items-start gap-1 py-1">
                       <span className="text-xs text-text-component">
                         {components[0].parent?.name ?? components[0].name}
                       </span>
-                      {Array.from(uniqueProps).map((prop) => (
-                        <HighlightedText
-                          key={prop}
-                          text={[prop]}
-                          searchKey={searchKey}
-                          replace={replace}
-                        />
-                      ))}
+                      {searchKey.length > 0 &&
+                        Array.from(uniqueProps).map((prop) => (
+                          <HighlightedText
+                            key={prop}
+                            text={[prop]}
+                            searchKey={searchKey}
+                            replace={replace}
+                            searchSettings={searchSettings}
+                          />
+                        ))}
                     </span>
                   </span>
                   <IconButton
