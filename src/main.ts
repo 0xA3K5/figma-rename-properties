@@ -78,7 +78,7 @@ const handleReplace = (
 };
 
 export default function () {
-  showUI({ width: 320, height: 320 });
+  showUI({ width: 320, height: 480 });
   on<ReplaceProperties>(
     'REPLACE_PROPERTIES',
     (searchKey, replacement, components) => {

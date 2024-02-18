@@ -142,10 +142,18 @@ function Plugin() {
           />
         </Stack>
         <div className="flex gap-2">
-          <Button onClick={() => handleReplace(replaceComps)} secondary>
+          <Button
+            disabled={replace.trim() === ''}
+            onClick={() => handleReplace(replaceComps)}
+            secondary
+          >
             Replace
           </Button>
-          <Button onClick={handleReplaceAll} secondary>
+          <Button
+            disabled={replace.trim() === ''}
+            onClick={handleReplaceAll}
+            secondary
+          >
             Replace All
           </Button>
         </div>
