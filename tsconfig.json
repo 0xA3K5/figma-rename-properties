@@ -3,5 +3,5 @@
   "compilerOptions": {
     "typeRoots": ["node_modules/@figma", "node_modules/@types"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "./tailwind.config.js"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }
