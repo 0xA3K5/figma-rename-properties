@@ -1,6 +1,7 @@
 declare const styles: {
   readonly "bg-bg": string;
   readonly "bg-bg-brand": string;
+  readonly "bg-bg-component": string;
   readonly "bg-bg-hover": string;
   readonly "bg-bg-inverse": string;
   readonly "bg-bg-selected": string;
@@ -9,8 +10,10 @@ declare const styles: {
   readonly "bg-gray-200": string;
   readonly "bg-opacity-20": string;
   readonly "bg-opacity-40": string;
+  readonly "bg-white": string;
   readonly "bg-yellow-200": string;
   readonly "border": string;
+  readonly "border-b": string;
   readonly "border-border": string;
   readonly "border-t": string;
   readonly "cursor-default": string;
@@ -21,6 +24,7 @@ declare const styles: {
   readonly "duration-150": string;
   readonly "duration-200": string;
   readonly "filter": string;
+  readonly "fixed": string;
   readonly "flex": string;
   readonly "flex-col": string;
   readonly "flex-grow-0": string;
@@ -32,9 +36,11 @@ declare const styles: {
   readonly "gap-4": string;
   readonly "group": string;
   readonly "group-hover:opacity-100": string;
+  readonly "h-full": string;
   readonly "hidden": string;
   readonly "hover:bg-bg-hover": string;
   readonly "inline-flex": string;
+  readonly "inset-0": string;
   readonly "items-center": string;
   readonly "items-start": string;
   readonly "justify-between": string;
@@ -58,6 +64,7 @@ declare const styles: {
   readonly "rounded-md": string;
   readonly "rounded-sm": string;
   readonly "sr-only": string;
+  readonly "sticky": string;
   readonly "text-gray-700": string;
   readonly "text-opacity-60": string;
   readonly "text-sm": string;
@@ -70,6 +77,7 @@ declare const styles: {
   readonly "transform": string;
   readonly "visible": string;
   readonly "w-full": string;
+  readonly "z-10": string;
 };
 export = styles;
 

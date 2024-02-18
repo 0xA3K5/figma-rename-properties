@@ -102,7 +102,9 @@ function Plugin() {
 
   return (
     <Fragment>
-      <div className="flex flex-col gap-4 p-4">
+      <div
+        className={`${matchingComps ? 'border-b border-border' : null} sticky inset-0 z-10 flex w-full flex-col gap-4 bg-bg p-4`}
+      >
         <Stack space="small">
           <div className="flex flex-wrap gap-1">
             <ChoiceChip
@@ -149,7 +151,7 @@ function Plugin() {
         </div>
       </div>
       {matchingComps && (
-        <ul className="flex flex-col border-t border-border pt-4">
+        <ul className="flex flex-col pt-4">
           {Object.entries(matchingComps).map(([parentId, components]) => {
             const uniqueProps = new Set(
               components.flatMap((comp) => comp.matchedProps)
