@@ -4,7 +4,7 @@
     "node": true
 },
 "extends": ["airbnb-typescript", "airbnb", "airbnb/hooks", "plugin:tailwindcss/recommended",   "plugin:prettier/recommended"],
-"ignorePatterns": ["build/"],
+"ignorePatterns": ["build/", "tailwind.config.js"],
 "plugins": ["import", "@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

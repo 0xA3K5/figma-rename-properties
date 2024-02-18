@@ -121,7 +121,7 @@ function Plugin() {
         </div>
       </div>
       {matchingComps && (
-        <ul className="flex flex-col">
+        <ul className="flex flex-col border-t border-border pt-4">
           {Object.entries(matchingComps).map(([parentId, components]) => {
             const uniqueProps = new Set(
               components.flatMap((comp) => comp.matchedProps)
@@ -131,13 +131,15 @@ function Plugin() {
               <li key={parentId}>
                 <button
                   type="button"
-                  className={`group ${replaceComps.includes(components[0]) ? 'bg-blue-300 bg-opacity-20' : ''} flex w-full cursor-default items-center justify-between gap-3 px-4 py-1 text-sm`}
+                  className={`group ${replaceComps.includes(components[0]) ? 'bg-bg-selected bg-opacity-20' : ''} flex w-full cursor-default items-center justify-between gap-3 px-4 py-1 text-sm`}
                   onClick={() => handleComponentSelect(parentId, components)}
                 >
                   <span className="flex items-start">
-                    <IconComponent />
+                    <span className="text-text-component">
+                      <IconComponent />
+                    </span>
                     <span className="flex flex-col gap-1 py-1">
-                      <span className="text-xs" style={{ color: '#9747FF' }}>
+                      <span className="text-xs text-text-component">
                         {components[0].parent?.name ?? components[0].name}
                       </span>
                       {Array.from(uniqueProps).map((prop) => (
