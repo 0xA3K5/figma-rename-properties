@@ -20,10 +20,16 @@ import {
   ISearchSettings,
 } from './types';
 import IconButton from './components/button/IconButton';
-import { IconComponent, IconTarget } from './components/icons';
+import {
+  IconCaseSensitive,
+  IconComponent,
+  IconTarget,
+  IconWholeWord,
+} from './components/icons';
 import HighlightedText from './components/highlighted-text/HighlightedText';
-import groupByParent from './utils/group-by-parent';
-import ChoiceChip from './components/chip/ChoiceChip';
+import groupByParent from './utils';
+import TextInput from './components/input';
+import { IconChip } from './components/chip';
 
 function Plugin() {
   const [searchKey, setSearchKey] = useState('');
@@ -106,36 +112,43 @@ function Plugin() {
         className={`${matchingComps ? 'border-b border-border' : null} sticky inset-0 z-10 flex w-full flex-col gap-4 bg-bg p-4`}
       >
         <Stack space="small">
-          <div className="flex flex-wrap gap-1">
-            <ChoiceChip
-              label="Case Sensitive"
-              onChange={() =>
-                setSearchSettings({
-                  ...searchSettings,
-                  caseSensitive: !searchSettings.caseSensitive,
-                })
-              }
-            />
-            <ChoiceChip
-              label="Match Whole Word"
-              onChange={() =>
-                setSearchSettings({
-                  ...searchSettings,
-                  matchWholeWord: !searchSettings.matchWholeWord,
-                })
-              }
-            />
+          <div className="flex items-center gap-1">
+            <div className="w-full">
+              <TextInput
+                label="search"
+                placeholder="Search"
+                value={searchKey}
+                onInput={(e) => setSearchKey(e.currentTarget.value)}
+              >
+                <div className="flex gap-1">
+                  <IconChip
+                    icon={<IconCaseSensitive />}
+                    label="Case Sensitive"
+                    tooltip="Case Sensitive"
+                    onChange={() =>
+                      setSearchSettings({
+                        ...searchSettings,
+                        caseSensitive: !searchSettings.caseSensitive,
+                      })
+                    }
+                  />
+                  <IconChip
+                    icon={<IconWholeWord />}
+                    label="Match Whole Word"
+                    tooltip="Match Whole Word"
+                    onChange={() =>
+                      setSearchSettings({
+                        ...searchSettings,
+                        matchWholeWord: !searchSettings.matchWholeWord,
+                      })
+                    }
+                  />
+                </div>
+              </TextInput>
+            </div>
           </div>
-          <Textbox
-            variant="border"
-            label="Search"
-            placeholder="Search"
-            value={searchKey}
-            onInput={(e) => setSearchKey(e.currentTarget.value)}
-          />
-          <Textbox
-            variant="border"
-            label="replacement"
+          <TextInput
+            label="replace with"
             placeholder="Replace with..."
             value={replace}
             onInput={(e) => setReplacement(e.currentTarget.value)}
