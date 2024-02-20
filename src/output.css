@@ -572,28 +572,8 @@ video {
   inset: 0px;
 }
 
-.left-0 {
-  left: 0px;
-}
-
-.right-0 {
-  right: 0px;
-}
-
-.top-0 {
-  top: 0px;
-}
-
-.top-full {
-  top: 100%;
-}
-
 .z-10 {
   z-index: 10;
-}
-
-.z-20 {
-  z-index: 20;
 }
 
 .z-50 {
@@ -641,10 +621,6 @@ video {
   width: 100%;
 }
 
-.min-w-32 {
-  min-width: 8rem;
-}
-
 .max-w-sm {
   max-width: 24rem;
 }
@@ -655,16 +631,6 @@ video {
 
 .flex-grow-0 {
   flex-grow: 0;
-}
-
-.rotate-0 {
-  --tw-rotate: 0deg;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.rotate-180 {
-  --tw-rotate: 180deg;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .cursor-default {
@@ -787,19 +753,6 @@ video {
   padding-bottom: 0.25rem;
 }
 
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
-
-.pl-2 {
-  padding-left: 0.5rem;
-}
-
-.pr-4 {
-  padding-right: 1rem;
-}
-
 .pt-4 {
   padding-top: 1rem;
 }
@@ -838,16 +791,17 @@ video {
   color: var(--figma-color-text-tertiary);
 }
 
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 .line-through {
   text-decoration-line: line-through;
 }
 
 .opacity-0 {
   opacity: 0;
-}
-
-.opacity-100 {
-  opacity: 1;
 }
 
 .opacity-60 {

@@ -136,7 +136,7 @@ function Plugin() {
             <div className="w-full">
               <TextInput
                 label="search"
-                placeholder="Search"
+                placeholder="Search variants"
                 value={searchKey}
                 onInput={(e) => setSearchKey(e.currentTarget.value)}
               >

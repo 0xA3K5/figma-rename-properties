@@ -1,8 +1,10 @@
 {
   "api": "1.0.0",
-  "editorType": ["figma"],
-  "id": "rename-component-properties",
-  "name": "Rename Component Properties",
+  "editorType": [
+    "figma"
+  ],
+  "id": "figma-variants-manager",
+  "name": "Variants Manager",
   "main": "build/main.js",
   "ui": "build/ui.js"
 }
