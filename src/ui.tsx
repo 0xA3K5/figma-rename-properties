@@ -3,7 +3,6 @@ import '!./output.css';
 import {
   Button,
   Stack,
-  Textbox,
   render,
   useWindowResize,
 } from '@create-figma-plugin/ui';
@@ -29,7 +28,7 @@ import {
 import HighlightedText from './components/highlighted-text/HighlightedText';
 import groupByParent from './utils';
 import TextInput from './components/input';
-import { IconChip } from './components/chip';
+import { ChoiceChip, IconChip } from './components/chip';
 
 function Plugin() {
   const [searchKey, setSearchKey] = useState('');
@@ -41,9 +40,16 @@ function Plugin() {
     IComponent[]
   > | null>();
 
+  const searchScopeOpts: ISearchSettings['searchScope'][] = [
+    'Selection',
+    'Page',
+    'All Pages',
+  ];
+
   const [searchSettings, setSearchSettings] = useState<ISearchSettings>({
     caseSensitive: false,
     matchWholeWord: false,
+    searchScope: searchScopeOpts[1],
   });
 
   useEffect(() => {
@@ -108,10 +114,24 @@ function Plugin() {
 
   return (
     <Fragment>
-      <div
-        className={`${matchingComps ? 'border-b border-border' : null} sticky inset-0 z-10 flex w-full flex-col gap-4 bg-bg p-4`}
-      >
+      <div className="sticky inset-0 z-10 flex w-full flex-col gap-4 border-b border-border bg-bg p-4">
         <Stack space="small">
+          <div className="flex items-center gap-1">
+            <span className="mr-2 text-text-secondary">Search in</span>
+            {searchScopeOpts.map((opt) => (
+              <ChoiceChip
+                key={opt}
+                value={opt}
+                checked={opt === searchSettings.searchScope}
+                onChange={() =>
+                  setSearchSettings({
+                    ...searchSettings,
+                    searchScope: opt,
+                  })
+                }
+              />
+            ))}
+          </div>
           <div className="flex items-center gap-1">
             <div className="w-full">
               <TextInput
@@ -154,21 +174,44 @@ function Plugin() {
             onInput={(e) => setReplacement(e.currentTarget.value)}
           />
         </Stack>
-        <div className="flex gap-2">
-          <Button
-            disabled={replace.trim() === ''}
-            onClick={() => handleReplace(replaceComps)}
-            secondary
+        <div className="flex items-center justify-between">
+          <div className="flex w-full gap-2">
+            <Button
+              disabled={replace.trim() === ''}
+              onClick={() => handleReplace(replaceComps)}
+              secondary
+            >
+              Replace
+            </Button>
+            <Button
+              disabled={replace.trim() === ''}
+              onClick={handleReplaceAll}
+              secondary
+            >
+              Replace All
+            </Button>
+          </div>
+
+          {/* <IconButton
+            // className={
+
+            //     ? 'bg-bg-secondary'
+            //     : ''
+            // }
+            onClick={() => setIsDropdownVisible(!isDropdownVisible)}
           >
-            Replace
-          </Button>
-          <Button
-            disabled={replace.trim() === ''}
-            onClick={handleReplaceAll}
-            secondary
-          >
-            Replace All
-          </Button>
+            <IconMenu />
+          </IconButton> */}
+
+          {/* <div className="relative mt-8" ref={menuRef}>
+            {isDropdownVisible && (
+              <Menu
+                options={menuOptions}
+                selectedOption={selectedOption}
+                setSelectedOption={setSelectedOption}
+              />
+            )}
+          </div> */}
         </div>
       </div>
       {matchingComps && (

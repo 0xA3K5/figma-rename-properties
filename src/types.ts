@@ -15,6 +15,7 @@ export interface IComponent {
 export interface ISearchSettings {
   caseSensitive: boolean;
   matchWholeWord: boolean;
+  searchScope: 'Selection' | 'Page' | 'All Pages';
 }
 
 export interface ReplaceProperties extends EventHandler {

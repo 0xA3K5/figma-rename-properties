@@ -13,12 +13,39 @@ const searchPage = (): SceneNode[] => {
   return figma.currentPage.findAll((node) => node.type === 'COMPONENT');
 };
 
+const searchAllPages = (): SceneNode[] => {
+  return figma.root.findAllWithCriteria({
+    types: ['COMPONENT_SET', 'COMPONENT'],
+  });
+};
+
+const getPage = (node: BaseNode): PageNode | null => {
+  if (node.type === 'PAGE') {
+    return node;
+  }
+  if (node.parent) {
+    return getPage(node.parent);
+  }
+  return null;
+};
+
 const findMatchingComponents = (
   searchKey: string,
   searchSettings: ISearchSettings
 ) => {
   const matchingComps: IComponent[] = [];
-  const nodes = searchPage();
+  let nodes;
+  switch (searchSettings.searchScope) {
+    case 'Page':
+      nodes = searchPage();
+      break;
+    case 'All Pages':
+      nodes = searchAllPages();
+      break;
+    default:
+      nodes = figma.currentPage.selection;
+      break;
+  }
 
   nodes.forEach((node) => {
     if (
@@ -94,6 +121,8 @@ export default function () {
   on<ComponentTargetHandler>('TARGET_COMPONENT', (parentId) => {
     const node = figma.getNodeById(parentId);
     if (node && (node.type === 'COMPONENT' || node.type === 'COMPONENT_SET')) {
+      const pageNode = getPage(node);
+      if (pageNode) figma.currentPage = pageNode;
       figma.currentPage.selection = [node];
       figma.viewport.scrollAndZoomIntoView([node]);
     }

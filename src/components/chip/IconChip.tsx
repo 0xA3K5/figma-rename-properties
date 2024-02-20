@@ -29,7 +29,7 @@ export default function IconChip({ label, icon, onChange, tooltip }: Props) {
   return (
     <label
       htmlFor={label.replace(/[^a-zA-Z0-9-_]/g, '')}
-      className="group relative aspect-square rounded-sm duration-150 focus-within:bg-bg-secondary"
+      className="group relative aspect-square duration-150 focus-within:bg-bg-secondary"
     >
       <input
         id={label.replace(/[^a-zA-Z0-9-_]/g, '')}
@@ -40,11 +40,11 @@ export default function IconChip({ label, icon, onChange, tooltip }: Props) {
         onChange={handleInputChange}
       />
       <span
-        className={`flex items-center justify-center gap-1 duration-150 
+        className={`flex items-center justify-center gap-1 overflow-clip rounded-md duration-150 
         ${
           checked
-            ? 'bg-bg-brand text-text-onbrand group-hover:bg-bg-brand-pressed'
-            : 'text-text-tertiary group-hover:bg-bg-secondary'
+            ? 'bg-bg-inverse text-text-oninverse group-hover:bg-bg-inverse'
+            : 'text-text-tertiary group-hover:bg-bg-secondary group-hover:text-text'
         }
             `}
       >
