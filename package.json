@@ -40,7 +40,7 @@
     "editorType": [
       "figma"
     ],
-    "id": "figma-variants-manager",
+    "id": "1341787472715232173",
     "name": "Variants Manager",
     "main": "src/main.ts",
     "ui": "src/ui.tsx"

@@ -1,4 +1,5 @@
 # Figma Component Variants Manager
+![Figma Variants Manager Cover](https://raw.githubusercontent.com/0xA3K5/figma-variants-manager/main/assets/cover.png)
 
 Features: 
 - [x] Find & Replace Variant Names
