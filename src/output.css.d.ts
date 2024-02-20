@@ -3,7 +3,6 @@ declare const styles: {
   readonly "aspect-square": string;
   readonly "bg-bg": string;
   readonly "bg-bg-inverse": string;
-  readonly "bg-bg-secondary": string;
   readonly "bg-bg-selected": string;
   readonly "bg-black": string;
   readonly "bg-opacity-20": string;
@@ -49,7 +48,6 @@ declare const styles: {
   readonly "max-w-sm": string;
   readonly "mr-2": string;
   readonly "mt-2": string;
-  readonly "mt-8": string;
   readonly "opacity-0": string;
   readonly "opacity-60": string;
   readonly "overflow-clip": string;

@@ -5,13 +5,12 @@ export default function groupByParent(
 ): Record<string, IComponent[]> {
   return data.reduce(
     (acc, component) => {
-      const parentId = component.parent?.id ?? component.id;
+      const parentId = component.parent.id;
 
       if (!acc[parentId]) {
         acc[parentId] = [];
       }
-
-      acc[parentId].push(component);
+      // acc[parentId].push(component);
       return acc;
     },
     {} as Record<string, IComponent[]>

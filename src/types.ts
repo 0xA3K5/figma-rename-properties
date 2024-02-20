@@ -3,7 +3,7 @@ import { EventHandler } from '@create-figma-plugin/utilities';
 export interface IComponent {
   id: string;
   name: string;
-  parent?: {
+  parent: {
     id: string;
     name: string;
   };

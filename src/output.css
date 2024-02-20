@@ -588,10 +588,6 @@ video {
   margin-top: 0.5rem;
 }
 
-.mt-8 {
-  margin-top: 2rem;
-}
-
 .flex {
   display: flex;
 }
@@ -711,10 +707,6 @@ video {
 
 .bg-bg-inverse {
   background-color: var(--figma-color-bg-inverse);
-}
-
-.bg-bg-secondary {
-  background-color: var(--figma-color-bg-secondary);
 }
 
 .bg-bg-selected {

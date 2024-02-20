@@ -1,7 +1,9 @@
 # Figma Component Variants Manager
+
 ![Figma Variants Manager Cover](https://raw.githubusercontent.com/0xA3K5/figma-variants-manager/main/assets/cover.png)
 
-Features: 
+Features:
+
 - [x] Find & Replace Variant Names
 - [ ] Variant Name Linter
 
@@ -11,5 +13,4 @@ Features:
 - [`0xA3K5/figma-property-inspector`](https://github.com/0xA3K5/figma-property-inspector)
 - [`0xA3K5/figma-updates-to-slack`](https://github.com/0xA3K5/figma-updates-to-slack)
 
-
-*This plugin is built with [Create Figma Plugin](https://yuanqing.github.io/create-figma-plugin/).*
+_This plugin is built with [Create Figma Plugin](https://yuanqing.github.io/create-figma-plugin/)._

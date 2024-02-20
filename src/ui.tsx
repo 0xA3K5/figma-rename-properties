@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 import '!./output.css';
 import {
   Button,
@@ -34,12 +33,6 @@ function Plugin() {
   const [searchKey, setSearchKey] = useState('');
   const [replace, setReplacement] = useState('');
 
-  const [replaceComps, setReplaceComps] = useState<IComponent[]>([]);
-  const [matchingComps, setMatchingComps] = useState<Record<
-    string,
-    IComponent[]
-  > | null>();
-
   const searchScopeOpts: ISearchSettings['searchScope'][] = [
     'Selection',
     'Page',
@@ -61,17 +54,6 @@ function Plugin() {
     return () => clearTimeout(timeoutId);
   }, [searchKey, searchSettings]);
 
-  on<MatchingComponents>('MATCHING_COMPONENTS', (components) => {
-    const groupedComponents = groupByParent(components);
-    setMatchingComps(groupedComponents);
-    setReplaceComps(groupedComponents[Object.keys(groupedComponents)[0]]);
-
-    const firstGroup = Object.values(groupedComponents)[0];
-    if (firstGroup && firstGroup.length > 0) {
-      emit<ComponentTargetHandler>('TARGET_COMPONENT', firstGroup[0].id);
-    }
-  });
-
   const handleReplace = (components: IComponent[]) => {
     emit<ReplaceProperties>(
       'REPLACE_PROPERTIES',
@@ -85,6 +67,22 @@ function Plugin() {
   const handleReplaceAll = () => {
     handleReplace(Object.values(matchingComps ?? {}).flat());
   };
+  const [replaceComps, setReplaceComps] = useState<IComponent[]>([]);
+  const [matchingComps, setMatchingComps] = useState<Record<
+    string,
+    IComponent[]
+  > | null>(null);
+
+  on<MatchingComponents>('MATCHING_COMPONENTS', (components) => {
+    const groupedComponents = groupByParent(components);
+    setMatchingComps(groupedComponents);
+    setReplaceComps(groupedComponents[Object.keys(groupedComponents)[0]]);
+
+    const firstGroup = Object.values(groupedComponents)[0];
+    if (firstGroup && firstGroup.length > 0) {
+      emit<ComponentTargetHandler>('TARGET_COMPONENT', firstGroup[0].id);
+    }
+  });
 
   const handleComponentTarget = (parentId: string) => {
     emit<ComponentTargetHandler>('TARGET_COMPONENT', parentId);
@@ -114,10 +112,10 @@ function Plugin() {
 
   return (
     <Fragment>
-      <div className="sticky inset-0 z-10 flex w-full flex-col gap-4 border-b border-border bg-bg p-4">
+      <div className="border-border bg-bg sticky inset-0 z-10 flex w-full flex-col gap-4 border-b p-4">
         <Stack space="small">
           <div className="flex items-center gap-1">
-            <span className="mr-2 text-text-secondary">Search in</span>
+            <span className="text-text-secondary mr-2">Search in</span>
             {searchScopeOpts.map((opt) => (
               <ChoiceChip
                 key={opt}
@@ -191,27 +189,6 @@ function Plugin() {
               Replace All
             </Button>
           </div>
-
-          {/* <IconButton
-            // className={
-
-            //     ? 'bg-bg-secondary'
-            //     : ''
-            // }
-            onClick={() => setIsDropdownVisible(!isDropdownVisible)}
-          >
-            <IconMenu />
-          </IconButton> */}
-
-          {/* <div className="relative mt-8" ref={menuRef}>
-            {isDropdownVisible && (
-              <Menu
-                options={menuOptions}
-                selectedOption={selectedOption}
-                setSelectedOption={setSelectedOption}
-              />
-            )}
-          </div> */}
         </div>
       </div>
       {matchingComps && (
@@ -232,7 +209,7 @@ function Plugin() {
                       <IconComponent />
                     </span>
                     <span className="flex flex-col items-start gap-1 py-1">
-                      <span className="text-xs text-text-component">
+                      <span className="text-text-component text-xs">
                         {components[0].parent?.name ?? components[0].name}
                       </span>
                       {searchKey.length > 0 &&

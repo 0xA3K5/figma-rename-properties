@@ -1,7 +1,8 @@
 {
-  "extends": "@create-figma-plugin/tsconfig",
+  "extends": "@repo/typescript-config/preact.json",
   "compilerOptions": {
-    "typeRoots": ["node_modules/@figma", "node_modules/@types"]
+    "plugins": [{ "name": "next" }]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

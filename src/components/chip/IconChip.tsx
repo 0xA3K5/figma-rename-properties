@@ -29,7 +29,7 @@ export default function IconChip({ label, icon, onChange, tooltip }: Props) {
   return (
     <label
       htmlFor={label.replace(/[^a-zA-Z0-9-_]/g, '')}
-      className="group relative aspect-square duration-150 focus-within:bg-bg-secondary"
+      className="focus-within:bg-bg-secondary group relative aspect-square duration-150"
     >
       <input
         id={label.replace(/[^a-zA-Z0-9-_]/g, '')}
